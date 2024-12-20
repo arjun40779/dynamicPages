@@ -21,8 +21,6 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: "16" # Specify the Node.js version you want
 
       - name: Install Node.js packages
         run: npm install
