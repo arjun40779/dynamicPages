@@ -25,8 +25,3 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync ./ s3://dynamic-site-test --delete --exact-timestamps
-
-      # Optional: Invalidate CloudFront cache (if using CloudFront with S3)
-      - name: Invalidate CloudFront Cache
-        run: |
-          aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
