@@ -1,12 +1,8 @@
 name: Deploy to S3
 
 on:
-  workflow_dispatch: # Allows manual or API-triggered workflows
-    inputs:
-      event_type:
-        description: "Specify the event type"
-        required: true
-        default: "trigger-workflow"
+  repository_dispatch:
+    types: [trigger-workflow]
 
 jobs:
   deploy:
