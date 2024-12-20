@@ -1,18 +1,16 @@
 name: Deploy to S3
 
 on:
-  push:
-    branches:
-      - main # Trigger on push to main branch
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch: # Allows manual or API-triggered workflows
     inputs:
-      environment:
-        description: "Deployment environment (e.g., production)"
-        required: false
-        default: "production"
+      event_type:
+        description: "Specify the event type"
+        required: true
+        default: "trigger-workflow"
 
 jobs:
   deploy:
+    if: ${{ github.event.inputs.event_type == 'trigger-workflow' }} # Check for event type
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +19,8 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: "16"
 
       - name: Install Node.js packages
         run: npm install
@@ -33,7 +33,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 # Adjust based on your AWS region
+          aws-region: us-east-1
 
       - name: Deploy to S3
         run: |
