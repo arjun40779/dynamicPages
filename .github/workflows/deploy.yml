@@ -6,7 +6,6 @@ on:
 
 jobs:
   deploy:
-    if: ${{ github.event.inputs.event_type == 'trigger-workflow' }} # Check for event type
     runs-on: ubuntu-latest
 
     steps:
